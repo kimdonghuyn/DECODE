@@ -8,6 +8,9 @@
 - Java 17
 - SpringBoot 3.3
 
+## DB
+- MariaDB
+
 
 ## 테이블 설계
 1. 필요한 항목
