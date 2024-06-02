@@ -8,7 +8,8 @@ enum ResponseMessage {
     SIGN_IN_FAIL = "Login information mismatch.",
     CERTIFICATION_FAIL = "Certification failed.",
 
-    DATABASE_ERROR = "Database error.",
+    MAIL_FAIL = "Mail send failed.",
+    DATABASE_ERROR = "Database error."
 }
 
 export default ResponseMessage;
