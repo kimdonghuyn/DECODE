@@ -1,4 +1,4 @@
-# MailAuth_pratice 
+# MailAuth_pratice (메인 인증 + 소셜 로그인)
 
 # 개발 환경
 ## Front
