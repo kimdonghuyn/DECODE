@@ -1,9 +1,11 @@
 package com.example.mailauth_practice.service.implement;
 
 import com.example.mailauth_practice.common.CertificationNumber;
+import com.example.mailauth_practice.dto.request.auth.CheckCertificationRequestDto;
 import com.example.mailauth_practice.dto.request.auth.EmailCertificationRequestDto;
 import com.example.mailauth_practice.dto.request.auth.IdCheckRequestDto;
 import com.example.mailauth_practice.dto.response.ResponseDto;
+import com.example.mailauth_practice.dto.response.auth.CheckCertificationResponseDto;
 import com.example.mailauth_practice.dto.response.auth.EmailCertificationResponseDto;
 import com.example.mailauth_practice.dto.response.auth.IdCheckResponseDto;
 import com.example.mailauth_practice.entity.CertificationEntity;
@@ -64,5 +66,26 @@ public class AuthServiceImplement implements AuthService {
         }
 
         return EmailCertificationResponseDto.success();
+    }
+
+    @Override
+    public ResponseEntity<? super CheckCertificationResponseDto> checkCertification(CheckCertificationRequestDto dto) {
+        try {
+            String userId = dto.getId();
+            String email = dto.getEmail();
+            String certificationNumber = dto.getCertificationNumber();
+
+            CertificationEntity certificationEntity = certificationRepository.findByUserId(userId);
+            if (certificationEntity == null) return CheckCertificationResponseDto.certificationFail();  // 존재 x
+
+            boolean isMatched = certificationEntity.getEmail().equals(email) && certificationEntity.getCertificationNumber().equals(certificationNumber);
+            if (!isMatched) return CheckCertificationResponseDto.certificationFail();  // 해당 데이터 일치 x
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        return CheckCertificationResponseDto.success();
     }
 }
