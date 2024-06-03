@@ -1,5 +1,6 @@
 package com.example.mailauth_practice.entity;
 
+import com.example.mailauth_practice.dto.request.auth.SignUpRequestDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -31,4 +32,12 @@ public class UserEntity {
 
     @Column(name = "role")
     private String role;
+
+    public UserEntity(SignUpRequestDto dto) {
+        this.userId = dto.getId();
+        this.password = dto.getPassword();
+        this.email = dto.getEmail();
+        this.type = "app"; // SNS 로그인때 변경 예정
+        this.role = "ROLE_USER";
+    }
 }
