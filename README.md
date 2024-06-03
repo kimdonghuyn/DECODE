@@ -63,15 +63,15 @@
 
 3) 회원 가입 완료
 <img width="715" alt="image" src="https://github.com/kimdonghuyn/MailAuth_pratice/assets/131759439/3ab11fee-aa8a-465c-9b77-2dd69c0e14d2">
-
 <img width="715" alt="image" src="https://github.com/kimdonghuyn/MailAuth_pratice/assets/131759439/096cc844-80a9-4ec1-af68-6bc9133ff169">
 
+4) certification 테이블에서 해당 아이디 인증코드 데이터 삭제
+<img width="720" alt="image" src="https://github.com/kimdonghuyn/MailAuth_pratice/assets/131759439/21f7ffae-1f1a-4540-a6de-f4a4be0e4ec4">
 
-4) 아이디 중복 체크
+5) 아이디 중복 체크
 <img width="715" alt="image" src="https://github.com/kimdonghuyn/MailAuth_pratice/assets/131759439/86ffab25-cb29-48c8-a6a3-00fa773189ae">
 
-
-5) 아이디 체크
+6) 아이디 체크
 <img width="715" alt="image" src="https://github.com/kimdonghuyn/MailAuth_pratice/assets/131759439/09a883e9-9026-422b-aa4e-b4f7799c4f1b">
 
      
