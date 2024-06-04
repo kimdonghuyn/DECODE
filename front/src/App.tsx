@@ -1,6 +1,8 @@
 import React, {ChangeEvent, useState} from 'react';
 import './App.css';
 import InputBox from "./components/InputBox";
+import {Route, Routes} from "react-router-dom";
+import SignUp from "./views/Authentication/SignUp";
 
 function App() {
     const [id, setId] = useState<string>('');
@@ -14,14 +16,11 @@ function App() {
     }
 
     return (
-        <>
-            {/*<InputBox title='아이디' placeholder='아이디를 입력해주세요.' type='text' value={id} onChange={onIdChangeHandler}
-                      buttonTitle='중복 확인' onButtonClick={onIdButtonClickHandler} message='사용 가능한 아이디 입니다.'
-                      isErrorMessage={false}/>*/}
-            <div className='text-link-lg full-width'>회원가입</div>
-            <div className='kakao-sign-in-button'></div>
-            <div className='naver-sign-in-button'></div>
-        </>
+       <Routes>
+           <Route path='/auth'>
+               <Route path='sign-up' element={<SignUp />} />
+           </Route>
+       </Routes>
     );
 }
 
