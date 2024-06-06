@@ -29,6 +29,23 @@
 
 
 # 구현
+## Front
+### 1. 회원 가입 화면
+<img width="1414" alt="image" src="https://github.com/kimdonghuyn/MailAuth_pratice/assets/131759439/6df10d40-a96f-42e5-8873-28b623461dc2">
+
+1) 아이디 중복 확인
+<img width="506" alt="image" src="https://github.com/kimdonghuyn/MailAuth_pratice/assets/131759439/7ba8ed56-ba63-440f-a975-e81f786a4eba">
+<img width="506" alt="image" src="https://github.com/kimdonghuyn/MailAuth_pratice/assets/131759439/b7a59225-a0ab-4d00-a1ac-08990a5d8e56">
+
+
+3) 이메일 유효성 검사
+<img width="506" alt="image" src="https://github.com/kimdonghuyn/MailAuth_pratice/assets/131759439/7261ff16-b73e-487a-9570-b3151e5e775e">
+<img width="506" alt="image" src="https://github.com/kimdonghuyn/MailAuth_pratice/assets/131759439/de8e2338-9883-4658-98d3-ec2fa796d646">
+
+
+
+
+## Back
 ### 1. 메일 전송 API
 
 <img width="704" alt="image" src="https://github.com/kimdonghuyn/MailAuth_pratice/assets/131759439/7f3fd61b-e988-473a-9674-644cdf3b747a">
@@ -36,7 +53,6 @@
 <img width="715" alt="image" src="https://github.com/kimdonghuyn/MailAuth_pratice/assets/131759439/ab25a7aa-5cf0-4106-989e-b69f04ec1df3">
 
 <img width="715" alt="image" src="https://github.com/kimdonghuyn/MailAuth_pratice/assets/131759439/ba188587-73fb-4eae-8140-737c1d44e087">
-
 
 ### 2. 메일 인증 코드 확인  API
 
