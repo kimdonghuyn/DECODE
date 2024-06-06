@@ -37,10 +37,14 @@
 <img width="506" alt="image" src="https://github.com/kimdonghuyn/MailAuth_pratice/assets/131759439/7ba8ed56-ba63-440f-a975-e81f786a4eba">
 <img width="506" alt="image" src="https://github.com/kimdonghuyn/MailAuth_pratice/assets/131759439/b7a59225-a0ab-4d00-a1ac-08990a5d8e56">
 
-
-3) 이메일 유효성 검사
+2) 이메일 유효성 검사
 <img width="506" alt="image" src="https://github.com/kimdonghuyn/MailAuth_pratice/assets/131759439/7261ff16-b73e-487a-9570-b3151e5e775e">
+<img width="471" alt="image" src="https://github.com/kimdonghuyn/MailAuth_pratice/assets/131759439/70509afe-927f-4631-98e7-7a6fbc2bc7a0">
 <img width="506" alt="image" src="https://github.com/kimdonghuyn/MailAuth_pratice/assets/131759439/de8e2338-9883-4658-98d3-ec2fa796d646">
+
+3) 비밀번호 유효성 검사
+<img width="506" alt="image" src="https://github.com/kimdonghuyn/MailAuth_pratice/assets/131759439/bf4d23ed-7412-4bb3-b5a4-41b50acde9ee">
+<img width="506" alt="image" src="https://github.com/kimdonghuyn/MailAuth_pratice/assets/131759439/aa6163bf-e936-42ef-8671-a291bb29f9d9">
 
 
 
