@@ -15,13 +15,13 @@ import {Simulate} from "react-dom/test-utils";
 import error = Simulate.error;
 import {ResponseDto} from "./response";
 
-const responseHandler = <T> (response: AxiosResponse<any, any>) => {
+const responseHandler = <T>(response: AxiosResponse<any, any>) => {
     const responseBody: T = response.data;
     return responseBody;
 };
 
 const errorHandler = (error: any) => {
-    if(!error.response || !error.response.data) return null;
+    if (!error.response || !error.response.data) return null;
     const responseBody: ResponseDto = error.response.data;
     return responseBody;
 };
@@ -40,7 +40,7 @@ const CHECK_CERTIFICATION_URL = () => `${API_DOMAIN}/auth/check-certification`;
 export const signInRequest = async (requestBody: SignInRequestDto) => {
     const result = await axios.post(SIGN_IN_URL(), requestBody)
         .then(responseHandler<SignInResponseDto>)
-        .then(errorHandler);
+        .catch(errorHandler);
     return result;
 };
 

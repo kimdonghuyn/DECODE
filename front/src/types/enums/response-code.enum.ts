@@ -8,7 +8,9 @@ enum ResponseCode {
     CERTIFICATION_FAIL = "CF",
 
     MAIL_FAIL = "MF",
-    DATABASE_ERROR = "DBE"
+    DATABASE_ERROR = "DBE",
+
+    NOT_PERMISSION = "NP"
 }
 
 export default ResponseCode;

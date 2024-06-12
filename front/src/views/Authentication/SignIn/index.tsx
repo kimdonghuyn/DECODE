@@ -18,12 +18,14 @@ export default function SignIn() {
     const [id, setId] = useState<string>('');
     const [password, setPassword] = useState<string>('');
 
-    const [message, setMessage ] = useState<string>('');
+    const [isError, setError] = useState<boolean>(false);
+
+    const [message, setMessage] = useState<string>('');
 
     const navigate = useNavigate();
 
     const signInResponse = (responseBody: ResponseBody<SignInResponseDto>) => {
-        if(!responseBody) return;
+        if (!responseBody) return;
 
         const {code} = responseBody;
         if (code === ResponseCode.VALIDATION_FAIL) alert('아이디와 비밀번호를 입력하세요');
@@ -68,7 +70,7 @@ export default function SignIn() {
     const onIdKeyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
         if (event.key !== "Enter") return;
         if (!passwordRef.current) return;
-        passwordRef.current?.focus();
+        passwordRef.current.focus();
     };
 
     const onPasswordKeyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -89,12 +91,12 @@ export default function SignIn() {
                             <InputBox ref={passwordRef} title='비밀번호' placeholder='비밀번호를 입력해주세요' type='password'
                                       value={password} onChange={onPasswordChangeHandler}
                                       isErrorMessage message={message} onKeyDown={onPasswordKeyDownHandler}/>
-                           </div>
+                        </div>
                         <div className='sign-in-content-button-box'>
-                            <div className='primary-button-lg full-width' onClick={onSignInButtonClickHandler}>{'로그인'}</div>
+                            <div className='primary-button-lg full-width'
+                                 onClick={onSignInButtonClickHandler}>{'로그인'}</div>
                             <div className='text-link-lg full-width' onClick={onSignUpButtonClickHandler}>{'회원가입'}</div>
                         </div>
-
                         <div className='sign-in-content-divider'></div>
                         <div className='sign-in-content-sns-sign-in-box'>
                             <div className='sign-in-content-sns-sign-in-title'>{'SNS 로그인'}</div>
