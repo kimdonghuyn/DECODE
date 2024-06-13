@@ -47,7 +47,21 @@
 <img width="506" alt="image" src="https://github.com/kimdonghuyn/MailAuth_pratice/assets/131759439/aa6163bf-e936-42ef-8671-a291bb29f9d9">
 
 
+### 2. 로그인 화면
+<img width="1503" alt="image" src="https://github.com/kimdonghuyn/MailAuth_pratice/assets/131759439/2fa82d41-988e-4b4a-a800-e07156931278">
 
+
+1) 아이디 or 비밀번호 유효성 검사
+<img width="461" alt="image" src="https://github.com/kimdonghuyn/MailAuth_pratice/assets/131759439/f7fc8a0b-6a06-418b-b4ff-fe1e1f05af9f">
+
+2) 로그인 전 (쿠키에 token 존재 x)
+<img width="653" alt="image" src="https://github.com/kimdonghuyn/MailAuth_pratice/assets/131759439/7f4c78dd-cccd-4dd4-8c29-9ea4f84256f8">
+
+3) 로그인 후 (쿠키에 token 존재 o)
+<img width="729" alt="image" src="https://github.com/kimdonghuyn/MailAuth_pratice/assets/131759439/425bef7f-8898-4dce-9aa0-ea4a6af6e7c6">
+
+4) 소셜 로그인 
+<img width="1503" alt="image" src="https://github.com/kimdonghuyn/MailAuth_pratice/assets/131759439/9a93472e-b806-499e-ad35-dbe078cdd068">
 
 ## Back
 ### 1. 메일 전송 API
@@ -65,7 +79,6 @@
 
 2) 아이디 불일치
 <img width="715" alt="image" src="https://github.com/kimdonghuyn/MailAuth_pratice/assets/131759439/b205319e-2264-45f3-825d-f4cb8a2358d1">
-
 
 3) 모두 일치
 <img width="715" alt="image" src="https://github.com/kimdonghuyn/MailAuth_pratice/assets/131759439/a3d4b701-fd1c-4e79-8442-1febd300659e">
@@ -94,4 +107,7 @@
 6) 아이디 체크
 <img width="715" alt="image" src="https://github.com/kimdonghuyn/MailAuth_pratice/assets/131759439/09a883e9-9026-422b-aa4e-b4f7799c4f1b">
 
-     
+## Swagger 적용
+<img width="1503" alt="image" src="https://github.com/kimdonghuyn/MailAuth_pratice/assets/131759439/0a6c6d7e-9801-46ba-8536-99e52bfd5b7c">
+
+
