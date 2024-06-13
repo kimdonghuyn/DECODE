@@ -3,6 +3,7 @@
 # 개발 환경
 ## Front
 - React
+- TypeScript
 
 ## Back
 - Java 17
