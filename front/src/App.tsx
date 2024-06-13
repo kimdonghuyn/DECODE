@@ -4,6 +4,7 @@ import InputBox from "./components/InputBox";
 import {Route, Routes} from "react-router-dom";
 import SignUp from "./views/Authentication/SignUp";
 import SignIn from "./views/Authentication/SignIn";
+import OAuth from "./views/Authentication/OAuth";
 
 function App() {
     const [id, setId] = useState<string>('');
@@ -21,6 +22,7 @@ function App() {
            <Route path='/auth'>
                <Route path='sign-up' element={<SignUp />} />
                <Route path='sign-in' element={<SignIn />} />
+               <Route path='oauth-response/:token/:expirationTime' element={<OAuth />} />
            </Route>
        </Routes>
     );
