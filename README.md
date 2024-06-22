@@ -1,4 +1,4 @@
-# MailAuth_pratice (메인 인증 + 소셜 로그인)
+# MailAuth_pratice (메인 인증 + 소셜 로그인 + SMS 문자 인증)
 
 # 개발 환경
 ## Front
@@ -11,6 +11,7 @@
 
 ## DB
 - MariaDB
+- Redis
 
 
 ## 테이블 설계
