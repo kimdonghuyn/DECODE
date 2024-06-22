@@ -16,5 +16,5 @@ public class EmailCertificationRequestDto {
 
     @Email
     @NotBlank
-    private String email;
+    private String contactInfo;
 }
