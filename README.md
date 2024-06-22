@@ -1,4 +1,10 @@
-# MailAuth_pratice (메인 인증 + 소셜 로그인 + SMS 문자 인증)
+# DECODE (메인 인증 + 소셜 로그인 + SMS 문자 인증)
+
+# 기능
+##1.로그인
+- 메인인증 (Spring mail)
+- 소셜 로그인 (OAuth)
+- SMS 문자인증 (coolSMS)
 
 # 개발 환경
 ## Front
