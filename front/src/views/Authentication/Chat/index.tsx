@@ -27,11 +27,6 @@ export default function Chat() {
         ws.current.onerror = (error) => {
             console.error("❌ WebSocket 오류 발생:", error);
         };
-
-        ws.current.onclose = (event) => {
-            console.warn("⚠️ WebSocket 연결 종료. 3초 후 재연결 시도...");
-            setTimeout(() => connectWebSocket(), 3000); // 3초 후 재연결 시도
-        };
     };
 
     // 컴포넌트 마운트 시 WebSocket 연결
