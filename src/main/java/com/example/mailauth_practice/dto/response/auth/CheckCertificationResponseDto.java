@@ -22,7 +22,7 @@ public class CheckCertificationResponseDto extends ResponseDto {
     }
 
     public static ResponseEntity<ResponseDto> certificationFail() {
-        ResponseDto responseBody = new ResponseDto(ResponseCodeE.VALIDATION_FAIL.getCode(), ResponseCodeMessageE.VALIDATION_FAIL.getMessage());
+        ResponseDto responseBody = new ResponseDto(ResponseCodeE.CERTIFICATION_FAIL.getCode(), ResponseCodeMessageE.CERTIFICATION_FAIL.getMessage());
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(responseBody);
     }
 }

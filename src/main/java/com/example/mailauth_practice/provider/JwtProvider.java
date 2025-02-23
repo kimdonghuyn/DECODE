@@ -18,6 +18,7 @@ public class JwtProvider {
     @Value("${secret-key}")  // application.property에 있는 secret-key를 가져옴
     private String secretKey;
 
+
     public String create(String userId) {
 
         Date expiredDate = Date.from(Instant.now().plus(1, ChronoUnit.HOURS)); // 유효기간 1시간으로 설정

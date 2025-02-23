@@ -1,13 +1,7 @@
 package com.example.mailauth_practice.controller;
 
-import com.example.mailauth_practice.dto.request.auth.CheckCertificationRequestDto;
-import com.example.mailauth_practice.dto.request.auth.EmailCertificationRequestDto;
-import com.example.mailauth_practice.dto.request.auth.IdCheckRequestDto;
-import com.example.mailauth_practice.dto.request.auth.SignUpRequestDto;
-import com.example.mailauth_practice.dto.response.auth.CheckCertificationResponseDto;
-import com.example.mailauth_practice.dto.response.auth.EmailCertificationResponseDto;
-import com.example.mailauth_practice.dto.response.auth.IdCheckResponseDto;
-import com.example.mailauth_practice.dto.response.auth.SignUpResponseDto;
+import com.example.mailauth_practice.dto.request.auth.*;
+import com.example.mailauth_practice.dto.response.auth.*;
 import com.example.mailauth_practice.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -29,8 +23,8 @@ public class AuthController {
     }
 
     @PostMapping("/email-certification")
-    public ResponseEntity<? super EmailCertificationResponseDto> emailCertification(@RequestBody @Valid EmailCertificationRequestDto requestBody) {
-        ResponseEntity<? super EmailCertificationResponseDto> response = authService.emailCertification(requestBody);
+    public ResponseEntity<? super CertificationResponseDto> emailCertification(@RequestBody @Valid CertificationRequestDto requestBody) {
+        ResponseEntity<? super CertificationResponseDto> response = authService.emailCertification(requestBody);
 
         return response;
     }
@@ -41,9 +35,27 @@ public class AuthController {
         return response;
     }
 
+    @PostMapping("/sms-certification")
+    public ResponseEntity<? super SendSmsResponseDto> sendSms(@RequestBody @Valid SendSmsRequestDto requestBody) {
+        ResponseEntity<? super SendSmsResponseDto> response = authService.sendSms(requestBody);
+        return response;
+    }
+
+    @PostMapping("/check-sms-certification")
+    public ResponseEntity<? super CheckSmsCertificationResponseDto> checkSmsCertification(@RequestBody @Valid CheckSmsCertificationRequestDto requestBody) {
+        ResponseEntity<? super CheckSmsCertificationResponseDto> response = authService.checkSmsCertification(requestBody);
+        return response;
+    }
+
     @PostMapping("/sign-up")
     public ResponseEntity<? super SignUpResponseDto> signUp(@RequestBody @Valid SignUpRequestDto requestBody) {
         ResponseEntity<? super SignUpResponseDto> response = authService.signUp(requestBody);
+        return response;
+    }
+
+    @PostMapping("/sign-in")
+    public ResponseEntity<? super SignInResponseDto> signIn(@RequestBody @Valid SignInRequestDto requestBody) {
+        ResponseEntity<? super SignInResponseDto> response = authService.signIn(requestBody);
         return response;
     }
 }

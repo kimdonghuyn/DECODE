@@ -36,6 +36,9 @@ const ID_CHECK_URL = () => `${API_DOMAIN}/auth/id-check`;
 const EMAIL_CERTIFICATION_URL = () => `${API_DOMAIN}/auth/email-certification`;
 const CHECK_CERTIFICATION_URL = () => `${API_DOMAIN}/auth/check-certification`;
 
+const CHAT_LIST_URL = () => `${API_DOMAIN}/chat/list`;
+const CHAT_SEND_URL = () => `${API_DOMAIN}/chat/send`;
+
 
 export const signInRequest = async (requestBody: SignInRequestDto) => {
     const result = await axios.post(SIGN_IN_URL(), requestBody)
@@ -71,4 +74,18 @@ export const checkCertificationRequest = async (requestBody: CheckCertificationR
         .catch(errorHandler)
     return result;
 };
+
+export const chatRequest = async (requestBody: any) => {
+    const result = await axios.post(CHAT_LIST_URL(), requestBody)
+        .then(responseHandler)
+        .catch(errorHandler);
+    return result;
+}
+
+export const chatSendRequest = async (requestBody: any) => {
+    const result = await axios.post(CHAT_SEND_URL(), requestBody)
+        .then(responseHandler)
+        .catch(errorHandler);
+    return result;
+}
 

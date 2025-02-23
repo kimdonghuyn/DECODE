@@ -1,0 +1,13 @@
+.chat-container {
+    flex: 1;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: lightblue;
+}
+
+.my-chat{
+    margin-left: 27rem;
+}

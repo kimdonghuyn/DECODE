@@ -1,8 +1,6 @@
 package com.example.mailauth_practice.dto.response.auth;
 
-import com.example.mailauth_practice.common.ResponseCode;
 import com.example.mailauth_practice.common.ResponseCodeE;
-import com.example.mailauth_practice.common.ResponseCodeMessage;
 import com.example.mailauth_practice.common.ResponseCodeMessageE;
 import com.example.mailauth_practice.dto.response.ResponseDto;
 import lombok.Getter;
@@ -10,14 +8,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 @Getter
-public class EmailCertificationResponseDto extends ResponseDto {
+public class CertificationResponseDto extends ResponseDto {
 
-    private EmailCertificationResponseDto() {
+    private CertificationResponseDto() {
         super();
     }
 
-    public static ResponseEntity<EmailCertificationResponseDto> success() {
-        EmailCertificationResponseDto responseBody = new EmailCertificationResponseDto();
+    public static ResponseEntity<CertificationResponseDto> success() {
+        CertificationResponseDto responseBody = new CertificationResponseDto();
         return ResponseEntity.status(HttpStatus.OK).body(responseBody);
     }
 

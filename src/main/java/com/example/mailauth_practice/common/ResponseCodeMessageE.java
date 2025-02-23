@@ -7,6 +7,7 @@ public enum ResponseCodeMessageE {
     SIGN_IN_FAIL("Login information mismatch."),
     CERTIFICATION_FAIL("Certification failed."),
     MAIL_FAIL("Mail send failed."),
+    SMS_FAIL("SMS send failed."),
     DATABASE_ERROR("Database error.");
 
     private final String message;

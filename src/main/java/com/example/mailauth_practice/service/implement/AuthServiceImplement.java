@@ -1,26 +1,26 @@
 package com.example.mailauth_practice.service.implement;
 
 import com.example.mailauth_practice.common.CertificationNumber;
-import com.example.mailauth_practice.dto.request.auth.CheckCertificationRequestDto;
-import com.example.mailauth_practice.dto.request.auth.EmailCertificationRequestDto;
-import com.example.mailauth_practice.dto.request.auth.IdCheckRequestDto;
-import com.example.mailauth_practice.dto.request.auth.SignUpRequestDto;
+import com.example.mailauth_practice.dto.request.auth.*;
 import com.example.mailauth_practice.dto.response.ResponseDto;
-import com.example.mailauth_practice.dto.response.auth.CheckCertificationResponseDto;
-import com.example.mailauth_practice.dto.response.auth.EmailCertificationResponseDto;
-import com.example.mailauth_practice.dto.response.auth.IdCheckResponseDto;
-import com.example.mailauth_practice.dto.response.auth.SignUpResponseDto;
+import com.example.mailauth_practice.dto.response.auth.*;
 import com.example.mailauth_practice.entity.CertificationEntity;
 import com.example.mailauth_practice.entity.UserEntity;
 import com.example.mailauth_practice.provider.EmailProvider;
+import com.example.mailauth_practice.provider.JwtProvider;
+import com.example.mailauth_practice.provider.SmsProvider;
 import com.example.mailauth_practice.repository.CertificationRepository;
 import com.example.mailauth_practice.repository.UserRepository;
 import com.example.mailauth_practice.service.AuthService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.concurrent.TimeUnit;
 
 @Service
 @RequiredArgsConstructor
@@ -30,10 +30,22 @@ public class AuthServiceImplement implements AuthService {
 
     private final CertificationRepository certificationRepository;
 
+    private final JwtProvider jwtProvider;
+
     private final EmailProvider emailProvider;
+
+    private final SmsProvider smsProvider;
+
+    private final RedisTemplate<String, Object> redisTemplate;
+
+    private final HttpSession session;
 
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();  // 의존성 주입 x (어떤걸 선택할지 여기서 선택할거기 때문)
 
+
+    /**
+     * 아이디 중복 체크
+     */
     @Override
     public ResponseEntity<? super IdCheckResponseDto> IdCheck(IdCheckRequestDto dto) {
         try {
@@ -50,19 +62,23 @@ public class AuthServiceImplement implements AuthService {
         return IdCheckResponseDto.success();
     }
 
+
+    /**
+     * 이메일 인증코드 전송
+     */
     @Override
-    public ResponseEntity<? super EmailCertificationResponseDto> emailCertification(EmailCertificationRequestDto dto) {
+    public ResponseEntity<? super CertificationResponseDto> emailCertification(CertificationRequestDto dto) {
         try {
             String userId = dto.getId();
             String email = dto.getEmail();
 
             boolean isExistId = userRepository.existsById(userId);   // 아이디 중복 체크
-            if (isExistId) return EmailCertificationResponseDto.duplicateId();
+            if (isExistId) return CertificationResponseDto.duplicateId();
 
             String certificationNumber = CertificationNumber.getCertificationNumber();  // 인증 코드
 
             boolean isSuccess = emailProvider.sendCertificationMail(email, certificationNumber);
-            if(!isSuccess) return EmailCertificationResponseDto.mailSendFail();
+            if (!isSuccess) return CertificationResponseDto.mailSendFail();
 
             CertificationEntity certificationEntity = new CertificationEntity(userId, email, certificationNumber);
             certificationRepository.save(certificationEntity);
@@ -72,9 +88,13 @@ public class AuthServiceImplement implements AuthService {
             return ResponseDto.databaseError();
         }
 
-        return EmailCertificationResponseDto.success();
+        return CertificationResponseDto.success();
     }
 
+
+    /**
+     * 이메일 인증코드 인증
+     */
     @Override
     public ResponseEntity<? super CheckCertificationResponseDto> checkCertification(CheckCertificationRequestDto dto) {
         try {
@@ -96,13 +116,17 @@ public class AuthServiceImplement implements AuthService {
         return CheckCertificationResponseDto.success();
     }
 
+
+    /**
+     * 회원가입
+     */
     @Override
     public ResponseEntity<? super SignUpResponseDto> signUp(SignUpRequestDto dto) {
         try {
             String userId = dto.getId();
 
             boolean isExistId = userRepository.existsById(userId);
-            if(isExistId) return SignUpResponseDto.duplicateId(); // 아이디가 존재하면
+            if (isExistId) return SignUpResponseDto.duplicateId(); // 아이디가 존재하면
 
             String email = dto.getEmail();
             String certificationNumber = dto.getCertificationNumber();
@@ -128,5 +152,89 @@ public class AuthServiceImplement implements AuthService {
         }
 
         return SignUpResponseDto.success();
+    }
+
+
+    /**
+     * 로그인
+     */
+    @Override
+    public ResponseEntity<? super SignInResponseDto> signIn(SignInRequestDto dto) {
+        String token = null;
+
+        try {
+            String userId = dto.getId();
+            UserEntity userEntity = userRepository.findByUserId(userId);
+            if (userEntity == null) return SignInResponseDto.signInFail();
+
+            String password = dto.getPassword();
+            String encodedPassword = userEntity.getPassword();
+            boolean isMatched = passwordEncoder.matches(password, encodedPassword);
+            if (!isMatched) return SignInResponseDto.signInFail();
+
+            token = jwtProvider.create(userId);
+
+            session.setAttribute("userId", userId);
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        return SignInResponseDto.success(token);
+    }
+
+
+    /**
+     * 문자 인증코드 전송
+     */
+    @Override
+    public ResponseEntity<? super SendSmsResponseDto> sendSms(SendSmsRequestDto dto) {
+        try {
+            String phoneNumber = dto.getPhoneNumber();
+            String certificationNumber = CertificationNumber.getCertificationNumber();
+            long timeout = 5;
+
+            boolean result = smsProvider.sendSms(phoneNumber, certificationNumber);
+            if (!result) return SendSmsResponseDto.smsSendFail();
+
+            redisTemplate.opsForValue().set(phoneNumber, certificationNumber, timeout, TimeUnit.MINUTES);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return SendSmsResponseDto.smsSendFail();
+        }
+
+        return SendSmsResponseDto.success();
+    }
+
+    /**
+     * 문자 인증코드 인증
+     */
+    @Override
+    public ResponseEntity<? super CheckSmsCertificationResponseDto> checkSmsCertification(CheckSmsCertificationRequestDto dto) {
+        try {
+            String phoneNumber = dto.getPhoneNumber();
+
+            String inputCertificationNumber = dto.getCertificationNumber();
+
+            String storedCertificationNumber = String.valueOf(redisTemplate.opsForValue().get(phoneNumber));
+
+            System.out.println(storedCertificationNumber);
+
+            System.out.println(phoneNumber + " / " + inputCertificationNumber);
+            if (storedCertificationNumber == null || "".equals(storedCertificationNumber))
+                return CheckSmsCertificationResponseDto.certificationFail();
+
+            boolean isMatched = inputCertificationNumber.equals(storedCertificationNumber);
+
+            if (!isMatched) return CheckSmsCertificationResponseDto.validationFail();
+
+            redisTemplate.delete(phoneNumber);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return SendSmsResponseDto.databaseError();
+        }
+
+        return CheckSmsCertificationResponseDto.success();
     }
 }

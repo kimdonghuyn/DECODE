@@ -7,6 +7,7 @@ public enum ResponseCodeE {
     SIGN_IN_FAIL("SF"),
     CERTIFICATION_FAIL("CF"),
     MAIL_FAIL("MF"),
+    SMS_FAIL("SMF"),
     DATABASE_ERROR("DBE");
 
     private final String code;
