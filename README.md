@@ -1,4 +1,10 @@
-# MailAuth_pratice (메인 인증 + 소셜 로그인)
+# DECODE (메인 인증 + 소셜 로그인 + SMS 문자 인증)
+
+# 기능
+##1.로그인
+- 메인인증 (Spring mail)
+- 소셜 로그인 (OAuth)
+- SMS 문자인증 (coolSMS)
 
 # 개발 환경
 ## Front
@@ -11,6 +17,7 @@
 
 ## DB
 - MariaDB
+- Redis
 
 
 ## 테이블 설계
@@ -110,5 +117,11 @@
 
 ## Swagger 적용
 <img width="1503" alt="image" src="https://github.com/kimdonghuyn/MailAuth_pratice/assets/131759439/0a6c6d7e-9801-46ba-8536-99e52bfd5b7c">
+
+## SMS 인증 코드 인증
+<img width="1095" alt="image" src="https://github.com/kimdonghuyn/DECODE/assets/131759439/72d76019-85f6-42ae-8f82-19a27a855ace">
+<img width="411" alt="image" src="https://github.com/kimdonghuyn/DECODE/assets/131759439/517d73c4-e1ca-4db2-97f6-0dae8a95ef59">
+<img width="1095" alt="image" src="https://github.com/kimdonghuyn/DECODE/assets/131759439/7125f7e6-b3f7-45fc-a0e7-93b023c6f4ca">
+<img width="309" alt="image" src="https://github.com/kimdonghuyn/DECODE/assets/131759439/c2f9c0a8-b062-4180-ab90-2717fb4321e8">
 
 
