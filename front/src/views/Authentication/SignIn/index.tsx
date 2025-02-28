@@ -35,8 +35,8 @@ export default function SignIn() {
 
         const {token, expirationTime} = responseBody as SignInResponseDto;
 
-        const now = (new Date().getTime()) * 1000;
-        const expires = new Date(now + expirationTime);
+        const now = new Date().getTime();
+        const expires = new Date(now + 60 * 60 * 1000); // 1 hour expiration time
 
         setCookie('accessToken', token, {expires, path: '/'});
         navigate('/');
