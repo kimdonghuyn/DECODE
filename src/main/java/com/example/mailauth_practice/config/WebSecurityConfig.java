@@ -46,7 +46,7 @@ public class WebSecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/", "/api/v1/auth/**", "/oauth2/**",  "/swagger-ui/**", "/v3/api-docs/**", "/ws/**").permitAll()    // 해당 url은 누구나 허용하겠다.
+                        .requestMatchers("/", "/api/v1/auth/**", "/oauth2/**",  "/swagger-ui/**", "/v3/api-docs/**", "/ws-connect/**").permitAll()    // 해당 url은 누구나 허용하겠다.
                         .requestMatchers("/api/v1/user/**").hasRole("USER")  // ROLE_USER에서 접두사(ROLE_) 안 적어도됨
                         .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()  // 나머지 request에 대해서는 인증을 하겠다.

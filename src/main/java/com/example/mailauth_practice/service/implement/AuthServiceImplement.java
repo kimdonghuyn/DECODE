@@ -173,9 +173,6 @@ public class AuthServiceImplement implements AuthService {
             if (!isMatched) return SignInResponseDto.signInFail();
 
             token = jwtProvider.create(userId);
-
-            session.setAttribute("userId", userId);
-
         } catch (Exception exception) {
             exception.printStackTrace();
             return ResponseDto.databaseError();

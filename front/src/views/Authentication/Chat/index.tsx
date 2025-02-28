@@ -1,61 +1,44 @@
 import './style.css';
 import React, { useEffect, useState, useRef } from "react";
+import {Client} from "@stomp/stompjs";
 
 export default function Chat() {
     const [messages, setMessages] = useState<string[]>([]);
     const [inputMessage, setInputMessage] = useState<string>('');
-    const ws = useRef<WebSocket | null>(null);
     const chatListRef = useRef<HTMLDivElement | null>(null);
+    const client = useRef<Client | null>(null);
 
     // 웹소켓 연결
-    const connectWebSocket = () => {
-        if (ws.current) {
-            ws.current.close(); // 기존 WebSocket이 있다면 종료
-        }
+    const connect = () => {
+        client.current = new Client({
+            brokerURL: 'ws://localhost:4040/ws-connect',
+            onConnect: (frame) => {
+                console.log('Connected: ' + frame);
+                subscribe();
+            },
+            onStompError: (frame) => {
+                console.log('Broker reported error: ' + frame.headers['message']);
+                console.log('Additional details: ' + frame.body);
+            },
+        });
 
-        ws.current = new WebSocket("ws://localhost:4040/ws/chat");
-
-        ws.current.onopen = () => {
-            console.log("✅ WebSocket 연결 성공");
-        };
-
-        ws.current.onmessage = (event) => {
-            console.log("📩 수신된 메시지:", event.data);
-            setMessages((prev) => [...prev, event.data]);
-        };
-
-        ws.current.onerror = (error) => {
-            console.error("❌ WebSocket 오류 발생:", error);
-        };
-    };
-
-    // 컴포넌트 마운트 시 WebSocket 연결
-    useEffect(() => {
-        connectWebSocket();
-
-        return () => {
-            ws.current?.close();
-        };
-    }, []);
+        client.current.activate();
+    }
 
     // 메시지 전송
     const isSending = useRef(false);
 
     const sendChat = () => {
-        if (ws.current && ws.current.readyState === WebSocket.OPEN && !isSending.current) {
-            isSending.current = true;
-            ws.current.send(inputMessage);
-            setMessages(prev => [...prev, `나: ${inputMessage}`]);
-
-            setTimeout(() => {
-                isSending.current = false;
-            }, 100);
-
-            setInputMessage("");
-        } else {
-            console.warn("⚠️ WebSocket이 아직 연결되지 않았거나 중복 실행 방지됨.");
-        }
+        client.current?.publish({destination: '/pub/chat', body: JSON.stringify({message: inputMessage})});
+        setInputMessage('');
     };
+
+    const subscribe = () => {
+        client.current?.subscribe('/sub/chat', (message) => {
+            const newMessage = JSON.parse(message.body).message;
+            setMessages((prev) => [...prev, newMessage]);
+        });
+    }
 
     // 최신 메시지가 추가될 때 자동 스크롤
     useEffect(() => {
@@ -63,6 +46,17 @@ export default function Chat() {
             chatListRef.current.scrollTo(0, chatListRef.current.scrollHeight);
         }
     }, [messages]);
+
+    useEffect(() => {
+        connect();
+
+        return () => {
+            if (client.current) {
+                client.current.deactivate();
+                client.current = null;
+            }
+        }
+    }, []);
 
     return (
         <div id="sign-in-wrapper">
@@ -80,17 +74,22 @@ export default function Chat() {
                     <div className="sign-in-title">{'채팅을 해보아요'}</div>
                     <div className="sign-in-content-box">
                         <div className="sign-in-content-button-box">
-                            <div className='sign-in-content-input-box'>
-                                <input
-                                    className='input-box-input'
-                                    placeholder="문자를 입력해주세요."
-                                    value={inputMessage}
-                                    onChange={(e) => setInputMessage(e.target.value)}
-                                />
-                            </div>
-                            <div className="primary-button-lg full-width" onClick={sendChat}>
-                                {'전송'}
-                            </div>
+                            <form onSubmit={(e) => {
+                                e.preventDefault();
+                                sendChat();
+                            }}>
+                                <div className='sign-in-content-input-box'>
+                                    <input
+                                        className='input-box-input'
+                                        placeholder="문자를 입력해주세요."
+                                        value={inputMessage}
+                                        onChange={(e) => setInputMessage(e.target.value)}
+                                    />
+                                </div>
+                                <button className="primary-button-lg full-width">
+                                    {'전송'}
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>
